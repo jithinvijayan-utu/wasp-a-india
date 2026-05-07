@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WASP Project – Survey Instructions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam&family=Noto+Sans+Devanagari&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f0e8;
+      --paper: #fffdf7;
+      --ink: #1a1612;
+      --accent: #c0392b;
+      --accent-light: #e8d5d3;
+      --muted: #7a7065;
+      --border: #d8d0c4;
+      --shadow: 0 2px 24px rgba(26,22,18,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 16px 80px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      width: 100%;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .header-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--ink);
+    }
+
+    .header h2 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .header-line {
+      width: 48px;
+      height: 2px;
+      background: var(--accent);
+      margin: 20px auto 0;
+      border-radius: 2px;
+    }
+
+    .lang-switcher {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 32px;
+      animation: fadeUp 0.7s 0.1s ease both;
+      flex-wrap: wrap;
+    }
+
+    .lang-btn {
+      padding: 8px 22px;
+      border: 1.5px solid var(--border);
+      background: var(--paper);
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .lang-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .lang-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 12px rgba(192,57,43,0.25);
+    }
+
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: clamp(28px, 6vw, 52px);
+      box-shadow: var(--shadow);
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    .lang-panel { display: none; }
+    .lang-panel.active { display: block; animation: fadeIn 0.4s ease; }
+
+    .panel-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .instructions-body {
+      line-height: 1.8;
+      color: #3a3530;
+      font-size: 0.97rem;
+    }
+
+    .instructions-body p { margin-bottom: 14px; }
+
+    .instructions-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 22px 0 10px;
+    }
+
+    .instructions-body ul, .instructions-body ol {
+      padding-left: 20px;
+      margin-bottom: 14px;
+    }
+
+    .instructions-body li { margin-bottom: 7px; line-height: 1.7; }
+    .instructions-body strong { color: var(--ink); font-weight: 500; }
+    .instructions-body a { color: var(--accent); }
+
+    .questions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 8px;
+      margin: 12px 0 18px;
+    }
+
+    .q-chip {
+      background: var(--accent-light);
+      border: 1px solid #d8a8a3;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 0.88rem;
+      color: #6b2318;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .note-box {
+      background: var(--accent-light);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      margin-top: 20px;
+      font-size: 0.88rem;
+      color: #6b2318;
+      line-height: 1.6;
+    }
+
+    .section-divider {
+      border: none;
+      border-top: 1px dashed var(--border);
+      margin: 24px 0;
+    }
+
+    .lang-note {
+      background: #f0f4e8;
+      border-left: 3px solid #7a9a3a;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 0.88rem;
+      color: #3d5a1a;
+      line-height: 1.6;
+    }
+
+    .lang-panel[data-lang="ml"] .instructions-body,
+    .lang-panel[data-lang="ml"] .panel-title,
+    .lang-panel[data-lang="ml"] .q-chip,
+    .lang-panel[data-lang="ml"] .note-box,
+    .lang-panel[data-lang="ml"] .lang-note {
+      font-family: 'Noto Sans Malayalam', 'DM Sans', sans-serif;
+      line-height: 1.95;
+    }
+
+    .lang-panel[data-lang="hi"] .instructions-body,
+    .lang-panel[data-lang="hi"] .panel-title,
+    .lang-panel[data-lang="hi"] .q-chip,
+    .lang-panel[data-lang="hi"] .note-box,
+    .lang-panel[data-lang="hi"] .lang-note {
+      font-family: 'Noto Sans Devanagari', 'DM Sans', sans-serif;
+      line-height: 1.9;
+    }
+
+    .cta-section {
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      text-align: center;
+    }
+
+    .cta-label { font-size: 13px; color: var(--muted); }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 36px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 18px rgba(192,57,43,0.28);
+    }
+
+    .cta-btn:hover {
+      background: #a93226;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(192,57,43,0.36);
+    }
+
+    .cta-btn svg { transition: transform 0.2s ease; }
+    .cta-btn:hover svg { transform: translateX(4px); }
+
+    .progress-dots {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 28px;
+      animation: fadeUp 0.7s 0.15s ease both;
+    }
+
+    .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .dot.active { background: var(--accent); transform: scale(1.3); }
+
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+
+    .footer a { color: var(--muted); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header class="header">
+    <p class="header-eyebrow">Centre for Environmental Sciences, UHasselt</p>
+    <h1>WASP Project</h1>
+    <h2>World Archives of Species Perception</h2>
+    <div class="header-line"></div>
+  </header>
+
+  <div class="lang-switcher" role="group" aria-label="Language selection">
+    <button class="lang-btn active" onclick="switchLang('en', this)">English</button>
+    <button class="lang-btn" onclick="switchLang('ml', this)">മലയാളം</button>
+    <button class="lang-btn" onclick="switchLang('hi', this)">हिन्दी</button>
+  </div>
+
+  <div class="progress-dots">
+    <div class="dot active" id="dot-en"></div>
+    <div class="dot" id="dot-ml"></div>
+    <div class="dot" id="dot-hi"></div>
+  </div>
+
+  <div class="card">
+
+    <!-- ENGLISH -->
+    <div class="lang-panel active" data-lang="en" id="panel-en">
+      <p class="panel-title">Share your perception of nature's biodiversity!</p>
+      <div class="instructions-body">
+        <p>Welcome to the <strong>WASP (World Archives of Species Perception) Project</strong>. In this survey, we show images of animals and six questions associated with them, and we ask you to rate each question according to your impression of the species — regardless of whether or not you know the species in the image.</p>
+        <p>Every time you complete six questions and press <strong>Rate</strong>, a response is collected and a new species image will be loaded. We have a total of <strong>1,980 animals</strong> for you to discover. You can stop and continue at your own pace.</p>
+        <p>We request you to complete at least <strong>25 animals</strong>, but if you want to explore more, you are absolutely welcome! For doing 25 animals, you'll only need a maximum of <strong>10 minutes</strong>.</p>
+
+        <h3>The six questions we ask:</h3>
+        <p><em>How would you rate this animal in terms of it being:</em></p>
+        <div class="questions-grid">
+          <div class="q-chip">🐾 Cute</div>
+          <div class="q-chip">⚠️ Dangerous</div>
+          <div class="q-chip">🧠 Intelligent</div>
+          <div class="q-chip">🌸 Beautiful</div>
+          <div class="q-chip">🔴 Endangered</div>
+          <div class="q-chip">🌿 Important for ecosystem</div>
+        </div>
+
+        <h3>Why we are doing it:</h3>
+        <p>Each species rated adds to the global mapping of human perception for biodiversity. Together, we can generate a global, open-access database for scientists to understand how human perception can help reinforcing biodiversity conservation.</p>
+
+        <hr class="section-divider">
+
+        <h3>What is the WASP Project?</h3>
+        <p>Certain species are better-known than others, or attract more public attention. Why this is the case remains an open question — not to mention which impact this has on decisions regarding the management or protection of these animals and plants. This phenomenon of not all species being regarded as equal is also seen among professional scientists and policymakers.</p>
+        <p>In the WASP Project, we developed a citizen science approach to better understand how people look at animals and plants, and what determines their view and behavior toward these species.</p>
+        <p>To date, the WASP Project is the largest and most comprehensive scientific attempt to bridge the gap of knowledge on public perception of biodiversity. We implement two separate surveys — <strong>WASP-A</strong> on animals and <strong>WASP-B</strong> on plants, each containing roughly 2,000 species representing about 58% and 76% of all species families evaluated under the IUCN Red List.</p>
+        <p>For more information about the project: <a href="http://www.wasp-project.net/" target="_blank" rel="noopener">www.wasp-project.net</a></p>
+	<p>If you have any questions, reach out to Jithin Vijayan (University of Turku, Finland; jithinvjyothis@gmail.com), or Dr. Tuan Nguyen (Hasselt University, Belgium; tuan.nguyen@uhasselt.be) </p>
+
+        <div class="note-box">
+          🍪 <strong>Note:</strong> We use cookies to help you track your progress. If you like this survey, please consider sharing it around! Your contributions can help promote better and wider biodiversity conservation. If you want to know more, please visit our <a href="http://www.wasp-project.net/" target="_blank" rel="noopener">Project page</a>.
+        </div>
+      </div>
+    </div>
+
+    <!-- MALAYALAM -->
+    <div class="lang-panel" data-lang="ml" id="panel-ml">
+      <p class="panel-title">പ്രകൃതിയുടെ ജൈവവൈവിധ്യത്തെക്കുറിച്ചുള്ള നിങ്ങളുടെ അഭിപ്രായം പങ്കുവെക്കൂ!</p>
+      <div class="instructions-body">
+        <p><strong>WASP (World Archives of Species Perception) പ്രോജക്ടി</strong>ലേക്ക് സ്വാഗതം. ഈ സർവേയിൽ, ഞങ്ങൾ മൃഗങ്ങളുടെ ചിത്രങ്ങളും അവയുമായി ബന്ധപ്പെട്ട ആറ് ചോദ്യങ്ങളും കാണിക്കുന്നു. ചിത്രത്തിലുള്ള ജീവി നിങ്ങൾക്ക് പരിചിതമായാലും ഇല്ലെങ്കിലും, നിങ്ങളുടെ പൊതുവായ ധാരണ അനുസരിച്ച് ഓരോ ചോദ്യവും വിലയിരുത്തണം.</p>
+        <p>ആറ് ചോദ്യങ്ങൾ പൂർത്തിയാക്കി <strong>Rate</strong> അമർത്തുമ്പോൾ, ഒരു പ്രതികരണം ശേഖരിക്കുകയും പുതിയ ഒരു ജീവിയുടെ ചിത്രം ലോഡ് ആകുകയും ചെയ്യും. ആകെ <strong>1,980 മൃഗങ്ങൾ</strong> കണ്ടെത്താൻ നിങ്ങൾക്ക് അവസരമുണ്ട്. നിങ്ങളുടെ ഇഷ്ടമനുസരിച്ച് ഇടയ്ക്ക് നിർത്തി തുടരാം.</p>
+        <p>കുറഞ്ഞത് <strong>25 മൃഗങ്ങൾ</strong> പൂർത്തിയാക്കണമെന്ന് ഞങ്ങൾ അഭ്യർത്ഥിക്കുന്നു — 25 മൃഗങ്ങൾക്ക് പരമാവധി <strong>10 മിനിറ്റ്</strong> മതിയാകും. കൂടുതൽ ചെയ്യാൻ തയ്യാറാണെങ്കിൽ, സ്വാഗതം!</p>
+
+        <div class="lang-note">
+          ℹ️ <strong>ശ്രദ്ധിക്കുക:</strong> സർവേ ഇംഗ്ലീഷിൽ മാത്രമാണ്. നിങ്ങളുടെ മനസ്സിലാക്കലിനായി, ചോദ്യങ്ങൾ മലയാളത്തിൽ ഇവിടെ നൽകിയിരിക്കുന്നു:
+        </div>
+
+        <h3>ഞങ്ങൾ ചോദിക്കുന്ന ആറ് ചോദ്യങ്ങൾ:</h3>
+        <p><em>ഈ മൃഗത്തെ നിങ്ങൾ എങ്ങനെ വിലയിരുത്തുന്നു:</em></p>
+        <div class="questions-grid">
+          <div class="q-chip">🐾 Cute (ക്യൂട്ട്)</div>
+          <div class="q-chip">⚠️ Dangerous (അപകടകാരി)</div>
+          <div class="q-chip">🧠 Intelligent (ബുദ്ധിശക്തി)</div>
+          <div class="q-chip">🌸 Beautiful (സുന്ദരം)</div>
+          <div class="q-chip">🔴 Endangered (വംശനാശഭീഷണി നേരിടുന്ന)</div>
+          <div class="q-chip">🌿 Important for ecosystem (ആവാസവ്യവസ്ഥയ്ക്ക് പ്രധാനമാണ്)</div>
+        </div>
+
+        <h3>ഞങ്ങൾ ഇത് ചെയ്യുന്നത് എന്തുകൊണ്ട്:</h3>
+        <p>ഓരോ ജീവിയും വിലയിരുത്തുന്നത് ജൈവവൈവിധ്യത്തെക്കുറിച്ചുള്ള മനുഷ്യ ധാരണയുടെ ആഗോള മാപ്പിങ്ങിന് സംഭാവന നൽകുന്നു. ഒന്നിച്ച്, ശാസ്ത്രജ്ഞർക്ക് ജൈവവൈവിധ്യ സംരക്ഷണത്തിൽ മനുഷ്യ ധാരണ എങ്ങനെ സഹായകരമാകുമെന്ന് മനസ്സിലാക്കാൻ ഒരു ആഗോള, ഓപ്പൺ-ആക്സസ് ഡേറ്റാബേസ് സൃഷ്ടിക്കാൻ കഴിയും.</p>
+
+        <hr class="section-divider">
+
+        <h3>WASP പ്രോജക്ട് എന്താണ്?</h3>
+        <p>ചില ജീവജാതികൾ മറ്റുള്ളവയെക്കാൾ കൂടുതൽ അറിയപ്പെടുന്നവയോ പൊതുശ്രദ്ധ ആകർഷിക്കുന്നവയോ ആണ്. ഇത് എന്തുകൊണ്ടാണ് എന്നത് ഒരു തുറന്ന ചോദ്യമായി തുടരുന്നു — ഇത് ഈ ജീവജാലങ്ങളുടെ സംരക്ഷണ തീരുമാനങ്ങളെ എങ്ങനെ ബാധിക്കുന്നുവെന്നും. ഈ പ്രതിഭാസം — എല്ലാ ജീവജാലങ്ങളെയും തുല്യമായി കണക്കാക്കാത്തത് — പ്രൊഫഷണൽ ശാസ്ത്രജ്ഞർക്കിടയിലും നയരൂപകർത്താക്കൾക്കിടയിലും കാണപ്പെടുന്നു.</p>
+        <p>WASP പ്രോജക്ടിൽ, ആളുകൾ ജീവജാലങ്ങളെ എങ്ങനെ കാണുന്നുവെന്നും അവരുടെ കാഴ്ചപ്പാടും പെരുമാറ്റവും നിർണ്ണയിക്കുന്നത് എന്തെന്നും മനസ്സിലാക്കാൻ ഒരു സിറ്റിസൺ സയൻസ് സമീപനം ഞങ്ങൾ വികസിപ്പിച്ചു.</p>
+        <p>ഇന്നുവരെ, WASP പ്രോജക്ട് ജൈവവൈവിധ്യത്തെക്കുറിച്ചുള്ള പൊതു ധാരണ മേഖലയിൽ ഏറ്റവും വലിയ ശാസ്ത്രീയ ശ്രമമാണ്. <strong>WASP-A</strong> (മൃഗങ്ങൾ), <strong>WASP-B</strong> (സസ്യങ്ങൾ) എന്നിങ്ങനെ രണ്ട് സർവേകൾ ഞങ്ങൾ നടത്തുന്നു, ഓരോന്നിലും ഏകദേശം 2,000 ജീവജാതികൾ ഉൾക്കൊള്ളുന്നു.</p>
+        <p>കൂടുതൽ വിവരങ്ങൾക്ക്: <a href="http://www.wasp-project.net/" target="_blank" rel="noopener">www.wasp-project.net</a></p>
+	<p>If you have any questions, reach out to Jithin Vijayan (University of Turku, Finland; jithinvjyothis@gmail.com), or Dr. Tuan Nguyen (Hasselt University, Belgium; tuan.nguyen@uhasselt.be) </p>
+
+        <div class="note-box">
+          🍪 <strong>കുറിപ്പ്:</strong> നിങ്ങളുടെ പുരോഗതി ട്രാക്ക് ചെയ്യാൻ ഞങ്ങൾ കുക്കികൾ ഉപയോഗിക്കുന്നു. ഈ സർവേ നിങ്ങൾക്ക് ഇഷ്ടപ്പെട്ടാൽ, ദയവായി ഷെയർ ചെയ്യൂ! നിങ്ങളുടെ സംഭാവന ജൈവവൈവിധ്യ സംരക്ഷണം പ്രോത്സാഹിപ്പിക്കാൻ സഹായിക്കും. കൂടുതൽ അറിയാൻ ഞങ്ങളുടെ <a href="http://www.wasp-project.net/" target="_blank" rel="noopener">പ്രോജക്ട് പേജ്</a> സന്ദർശിക്കൂ.
+        </div>
+      </div>
+    </div>
+
+    <!-- HINDI -->
+    <div class="lang-panel" data-lang="hi" id="panel-hi">
+      <p class="panel-title">प्रकृति की जैव विविधता के बारे में अपनी धारणा साझा करें!</p>
+      <div class="instructions-body">
+        <p><strong>WASP (World Archives of Species Perception) प्रोजेक्ट</strong> में आपका स्वागत है। इस सर्वेक्षण में, हम जानवरों की तस्वीरें और उनसे जुड़े छह प्रश्न दिखाते हैं। चाहे आप उस प्रजाति को जानते हों या नहीं, हम आपसे अनुरोध करते हैं कि आप अपनी सामान्य धारणा के अनुसार प्रत्येक प्रश्न का मूल्यांकन करें।</p>
+        <p>हर बार जब आप छह प्रश्न पूरे करके <strong>Rate</strong> दबाते हैं, तो एक प्रतिक्रिया दर्ज होती है और एक नई प्रजाति की छवि लोड होती है। खोजने के लिए कुल <strong>1,980 जानवर</strong> उपलब्ध हैं। आप अपनी गति से रुक कर जारी रख सकते हैं।</p>
+        <p>हम आपसे कम से कम <strong>25 जानवरों</strong> को पूरा करने का अनुरोध करते हैं — इसमें अधिकतम <strong>10 मिनट</strong> लगेंगे। यदि आप और अधिक करना चाहते हैं, तो आपका बिल्कुल स्वागत है!</p>
+
+        <div class="lang-note">
+          ℹ️ <strong>ध्यान दें:</strong> सर्वेक्षण केवल अंग्रेज़ी में है। आपकी समझ के लिए, प्रश्न यहाँ हिन्दी में दिए गए हैं:
+        </div>
+
+        <h3>हम जो छह प्रश्न पूछते हैं:</h3>
+        <p><em>आप इस जानवर को किस आधार पर रेट करेंगे:</em></p>
+        <div class="questions-grid">
+          <div class="q-chip">🐾 Cute (प्यारा)</div>
+          <div class="q-chip">⚠️ Dangerous (खतरनाक)</div>
+          <div class="q-chip">🧠 Intelligent (बुद्धिमान)</div>
+          <div class="q-chip">🌸 Beautiful (खूबसूरत)</div>
+          <div class="q-chip">🔴 Endangered (खतरे में)</div>
+          <div class="q-chip">🌿 Important for ecosystem (इकोसिस्टम के लिए ज़रूरी)</div>
+        </div>
+
+        <h3>हम यह क्यों कर रहे हैं:</h3>
+        <p>प्रत्येक रेट की गई प्रजाति जैव विविधता के प्रति मानवीय धारणा की वैश्विक मैपिंग में योगदान देती है। मिलकर हम वैज्ञानिकों के लिए एक वैश्विक, ओपन-एक्सेस डेटाबेस तैयार कर सकते हैं, जो यह समझने में मदद करेगा कि मानवीय धारणा जैव विविधता संरक्षण को कैसे मज़बूत कर सकती है।</p>
+
+        <hr class="section-divider">
+
+        <h3>WASP प्रोजेक्ट क्या है?</h3>
+        <p>कुछ प्रजातियाँ दूसरों की तुलना में अधिक जानी-मानी हैं या अधिक सार्वजनिक ध्यान आकर्षित करती हैं। ऐसा क्यों होता है, यह एक खुला प्रश्न है — और इसका जानवरों व पौधों के प्रबंधन या संरक्षण के निर्णयों पर क्या प्रभाव पड़ता है, यह भी। यह घटना — कि सभी प्रजातियों को समान नहीं माना जाता — पेशेवर वैज्ञानिकों और नीति निर्माताओं में भी देखी जाती है।</p>
+        <p>WASP प्रोजेक्ट में हमने एक नागरिक विज्ञान दृष्टिकोण विकसित किया है ताकि यह बेहतर समझा जा सके कि लोग जानवरों और पौधों को कैसे देखते हैं और उनके प्रति उनके विचार और व्यवहार को क्या निर्धारित करता है।</p>
+        <p>आज तक, WASP प्रोजेक्ट जैव विविधता की सार्वजनिक धारणा के ज्ञान की खाई को पाटने का सबसे बड़ा और व्यापक वैज्ञानिक प्रयास है। हम दो अलग-अलग सर्वेक्षण करते हैं — <strong>WASP-A</strong> (जानवर) और <strong>WASP-B</strong> (पौधे), प्रत्येक में लगभग 2,000 प्रजातियाँ शामिल हैं।</p>
+        <p>अधिक जानकारी के लिए: <a href="http://www.wasp-project.net/" target="_blank" rel="noopener">www.wasp-project.net</a></p>
+	<p>If you have any questions, reach out to Jithin Vijayan (University of Turku, Finland; jithinvjyothis@gmail.com), or Dr. Tuan Nguyen (Hasselt University, Belgium; tuan.nguyen@uhasselt.be) </p>
+
+        <div class="note-box">
+          🍪 <strong>नोट:</strong> आपकी प्रगति ट्रैक करने के लिए हम कुकीज़ का उपयोग करते हैं। यदि आपको यह सर्वेक्षण पसंद आया, तो कृपया इसे साझा करें! आपका योगदान जैव विविधता संरक्षण को बढ़ावा देने में मदद कर सकता है। अधिक जानने के लिए हमारा <a href="http://www.wasp-project.net/" target="_blank" rel="noopener">प्रोजेक्ट पेज</a> देखें।
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <p class="cta-label" id="cta-label">Ready? Click below to begin the survey.</p>
+      <a class="cta-btn" id="cta-btn" href="http://www.wasp-project.net/survey" target="_blank" rel="noopener">
+        Take the Survey
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+
+  </div><!-- /card -->
+
+  <footer class="footer">
+    <p>WASP Project &nbsp;·&nbsp; Centre for Environmental Sciences, UHasselt &nbsp;·&nbsp; <a href="http://www.wasp-project.net/" target="_blank" rel="noopener">wasp-project.net</a></p>
+  </footer>
+
+</div>
+
+<script>
+  const LANGS = ['en', 'ml', 'hi'];
+
+  const cta = {
+    label: {
+      en: 'Ready? Click below to begin the survey.',
+      ml: 'തയ്യാറാണോ? സർവേ ആരംഭിക്കാൻ താഴെ ക്ലിക്ക് ചെയ്യൂ.',
+      hi: 'तैयार हैं? सर्वेक्षण शुरू करने के लिए नीचे क्लिक करें।'
+    },
+    btn: {
+      en: 'Take the Survey',
+      ml: 'സർവേ ആരംഭിക്കൂ',
+      hi: 'सर्वेक्षण लें'
+    }
+  };
+
+  function switchLang(lang, btn) {
+    LANGS.forEach(l => {
+      document.getElementById('panel-' + l).classList.remove('active');
+      document.getElementById('dot-' + l).classList.remove('active');
+    });
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+
+    document.getElementById('panel-' + lang).classList.add('active');
+    document.getElementById('dot-' + lang).classList.add('active');
+    btn.classList.add('active');
+
+    document.getElementById('cta-label').textContent = cta.label[lang];
+    const ctaBtn = document.getElementById('cta-btn');
+    ctaBtn.childNodes[0].textContent = cta.btn[lang] + ' ';
+  }
+</script>
+</body>
+</html>
