@@ -1,0 +1,23 @@
+{
+  "lang_label": "English",
+  "panel_title": "Share your perception of nature's biodiversity!",
+  "intro": "Welcome to the <strong>WASP (World Archives of Species Perception) Project</strong>. In this survey, we show images of animals and six rating questions associated with them, and we ask you to rate it, according to your impression of the species — regardless of whether or not you know the species in the image.<br><br>Every time you complete six rating questions and press <strong>Rate</strong>, a response is collected and a new species image will be loaded. We have a total of <strong>1,980 animals</strong> for you to discover. You can stop and continue at your own pace.<br><br>We request you to complete at least <strong>25 animals</strong>, but if you want to explore more, you are absolutely welcome! For doing 25 animals, you'll only need a maximum of <strong>10 minutes</strong>.",
+  "questions_heading": "The six questions we ask:",
+  "questions_intro": "How would you rate this animal in terms of it being:",
+  "questions": [
+    "🐾 Cute",
+    "⚠️ Dangerous",
+    "🧠 Intelligent",
+    "🌸 Beautiful",
+    "🔴 Endangered",
+    "🌿 Important for ecosystem"
+  ],
+  "why_title": "Why we are doing it:",
+  "why_body": "This is a survey being done across the globe. Each species rated adds to the global mapping of human perception for biodiversity. Together, we can generate a global, open-access database for scientists to understand how human perception can help reinforcing biodiversity conservation.",
+  "what_title": "More information:",
+  "what_body": "For more information about the project: <a href='http://www.wasp-project.net/' target='_blank' rel='noopener'>www.wasp-project.net</a><br><br>If you have any questions, please reach out to Jithin Vijayan (University of Turku, Finland; <a href='mailto:jithinvjyothis@gmail.com'>jithinvjyothis@gmail.com</a>), or Dr. Tuan Nguyen (Hasselt University, Belgium; <a href='mailto:tuan.nguyen@uhasselt.be'>tuan.nguyen@uhasselt.be</a>).",
+  "note": "🍪 <strong>Note:</strong> We use cookies to help you track your progress. Because of this, you can stop in between, and resume the survey at your own pace. If you like this survey, please consider sharing it around! Your contributions can help promote better and wider biodiversity conservation.",
+  "lang_note": null,
+  "cta_label": "Ready? Click below to begin the survey.",
+  "cta_btn": "Take the Survey"
+}
